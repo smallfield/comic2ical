@@ -6,6 +6,7 @@ import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.CalScale;
+import net.fortuna.ical4j.model.property.Description;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Version;
@@ -20,7 +21,7 @@ public class IndexController extends Controller {
 
         net.fortuna.ical4j.model.Calendar cal =
             new net.fortuna.ical4j.model.Calendar();
-        cal.getProperties().add(new ProdId("-//Ben Fortuna//iCal4j 1.0//EN"));
+        cal.getProperties().add(new ProdId("-//Small Field//Comic2iCal 1.0//EN"));
         cal.getProperties().add(Version.VERSION_2_0);
         cal.getProperties().add(CalScale.GREGORIAN);
 
@@ -29,9 +30,10 @@ public class IndexController extends Controller {
         calendar.set(java.util.Calendar.DAY_OF_MONTH, 25);
 
         VEvent christmas =
-            new VEvent(new Date(calendar.getTime()), "Christmas Day");
+            new VEvent(new Date(calendar.getTime()), "クリスマスの日だよ");
         christmas.getProperties().add(
             new Uid(System.currentTimeMillis() + "@comic2ical.appspot.com"));
+        christmas.getProperties().add(new Description("日本語でOK？"));
 
         cal.getComponents().add(christmas);
 
