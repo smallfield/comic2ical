@@ -11,6 +11,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Logger;
 
 import org.slim3.controller.Controller;
@@ -25,52 +26,67 @@ public class FetchdataController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
+        Calendar fetchDate = Calendar.getInstance();
+        fetchDate.add(Calendar.MONTH, -1);
 
-        try {
-            URL url =
-                new URL("http://www.mangaoh.co.jp/download/comic/2011/01/");
-            HttpURLConnection connection =
-                (HttpURLConnection) url.openConnection();
+        SimpleDateFormat fmtForUrl = new SimpleDateFormat("yyyy/MM/");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/M/d");
+        String line;
+        String[] data;
 
-            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                return null;
-            }
+        while (true) {
+            try {
+                URL url =
+                    new URL("http://www.mangaoh.co.jp/download/comic/"
+                        + fmtForUrl.format(fetchDate.getTime()));
 
-            BufferedReader reader =
-                new BufferedReader(new InputStreamReader(
-                    connection.getInputStream(),
-                    Charset.forName("sjis")));
-            String line;
-            String[] data;
+                logger.info("Start fetching : " + url.toString());
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/m/d");
+                HttpURLConnection connection =
+                    (HttpURLConnection) url.openConnection();
 
-            while ((line = reader.readLine()) != null
-                && (data = line.split("\t", -1)).length == 7) {
-                ReleaseDate rd = new ReleaseDate();
-                try {
-                    rd.setDate(sdf.parse(data[2]));
-                } catch (ParseException e) {
-                    continue;
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    return null;
                 }
-                rd.setPublisher(data[0]);
-                rd.setSeries(data[1]);
-                rd.setTitle(data[3]);
-                rd.setAuthor(data[4]);
-                rd.setPrice(Integer.valueOf(data[5]));
 
-                Transaction tx = Datastore.beginTransaction();
-                Datastore.put(rd);
-                tx.commit();
+                BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(
+                        connection.getInputStream(),
+                        Charset.forName("sjis")));
+
+                int count = 0;
+                while ((line = reader.readLine()) != null
+                    && (data = line.split("\t", -1)).length == 7) {
+                    ReleaseDate rd = new ReleaseDate();
+                    try {
+                        rd.setDate(sdf.parse(data[2]));
+                    } catch (ParseException e) {
+                        continue;
+                    }
+                    rd.setPublisher(data[0]);
+                    rd.setSeries(data[1]);
+                    rd.setTitle(data[3]);
+                    rd.setAuthor(data[4]);
+                    rd.setPrice(Integer.valueOf(data[5]));
+
+                    Transaction tx = Datastore.beginTransaction();
+                    Datastore.put(rd);
+                    tx.commit();
+                    count++;
+                }
+                reader.close();
+                logger.info("End fetching : " + url.toString());
+                logger.info(count + " data was added.");
+                if (count == 0) {
+                    return null;
+                }
+
+                fetchDate.add(Calendar.MONTH, 1);
+            } catch (MalformedURLException e) {
+
+            } catch (IOException e) {
+                logger.info("");
             }
-            reader.close();
-
-        } catch (MalformedURLException e) {
-
-        } catch (IOException e) {
-            logger.info("");
         }
-        return null;
-
     }
 }

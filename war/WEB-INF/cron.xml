@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+	<cron>
+		<url>/cron/fetchdata</url>
+		<description>Fetch data from mangaoh.co.jp</description>
+		<schedule>every friday of month 18:12</schedule>
+		<timezone>Asia/Tokyo</timezone>
+		<!--<schedule>every 2 minutes</schedule> -->
+	</cron>
+</cronentries>
