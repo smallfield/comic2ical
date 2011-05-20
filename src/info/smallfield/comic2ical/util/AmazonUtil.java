@@ -1,10 +1,8 @@
 package info.smallfield.comic2ical.util;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
@@ -30,13 +28,11 @@ public class AmazonUtil {
     private static final String REQUEST_URI = "/onca/xml";
     private static final String REQUEST_METHOD = "GET";
 
-    private String endpoint = "ecs.amazonaws.jp"; // must be lowercase
+    private String endpoint = "ecs.amazonaws.jp";
     // TODO: Access Key ID
     private String awsAccessKeyId = "";
     // TODO: Secret Access Key
     private String awsSecretKey = "";
-
-
 
     private SecretKeySpec secretKeySpec = null;
     private Mac mac = null;
@@ -159,19 +155,15 @@ public class AmazonUtil {
             }
             reader.close();
 
-        } catch (MalformedURLException e) {
-            // TODO 自動生成された catch ブロック
-        } catch (IOException e) {
-            // TODO 自動生成された catch ブロック
+        } catch (Exception e) {
         }
 
         String contentString = content.toString();
 
-        if (contentString
-            .matches(".*<DetailPageURL>([^<]+)<\\/DetailPageURL>.*")) {
+        if (contentString.matches(".*<ASIN>([^<]+)<\\/ASIN>.*")) {
             return contentString.replaceAll(
-                ".*<DetailPageURL>([^<]+)<\\/DetailPageURL>.*",
-                "$1");
+                ".*<ASIN>([^<]+)<\\/ASIN>.*",
+                "http://amazon.jp/o/ASIN/$1/c0m1ca1-22/ref=nosim");
         } else {
             return "";
         }

@@ -18,7 +18,22 @@ public class ReleaseDateService {
         for (String author : authors) {
             res.addAll(Datastore
                 .query(m)
-                .filter(m.authorFlagment.startsWith(author))
+                .filter(m.authorFlagment.startsWith(author.toLowerCase()))
+                .asList());
+        }
+        return res;
+    }
+
+    public List<ReleaseDate> findByTitles(String titles) {
+        return findByAuthors(Arrays.asList(titles));
+    }
+
+    public List<ReleaseDate> findByTitles(List<String> titles) {
+        List<ReleaseDate> res = new ArrayList<ReleaseDate>();
+        for (String title : titles) {
+            res.addAll(Datastore
+                .query(m)
+                .filter(m.titleFlagment.startsWith(title.toLowerCase()))
                 .asList());
         }
         return res;

@@ -5,7 +5,7 @@ import info.smallfield.comic2ical.service.ReleaseDateService;
 import info.smallfield.comic2ical.util.AmazonUtil;
 
 import java.net.URI;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.fortuna.ical4j.data.CalendarOutputter;
@@ -35,13 +35,20 @@ public class IndexController extends Controller {
         cal.getProperties().add(Version.VERSION_2_0);
         cal.getProperties().add(CalScale.GREGORIAN);
 
-        List<ReleaseDate> list = rds.findByAuthors("飛呂彦");
+        List<String> authors = new ArrayList<String>();
+        authors.add("吉崎");
+        authors.add("荒木");
+
+        List<String> titles = new ArrayList<String>();
+        titles.add("ビリー");
+
+        List<ReleaseDate> list = new ArrayList<ReleaseDate>();
+        list.addAll(rds.findByAuthors(authors));
+        list.addAll(rds.findByTitles(titles));
+
+        AmazonUtil au = new AmazonUtil();
 
         for (ReleaseDate rd : list) {
-
-            Calendar calendar = java.util.Calendar.getInstance();
-            calendar.setTime(rd.getDate());
-
             VEvent date =
                 new VEvent(new Date(rd.getDate()), "『" + rd.getTitle() + "』発売日");
             date
@@ -49,15 +56,21 @@ public class IndexController extends Controller {
                 .add(
                     new Uid(System.currentTimeMillis()
                         + "@comic2ical.appspot.com"));
-            date.getProperties().add(
-                new Description(String.format(
-                    "作者: %s\n価格: %d円",
-                    rd.getAuthor(),
-                    rd.getPrice())));
 
-            AmazonUtil au = new AmazonUtil();
-            date.getProperties().add(
-                new Url(new URI(au.findItem(rd.getTitle()))));
+            Url url = new Url(new URI(au.findItem(rd.getTitle())));
+            date.getProperties().add(url);
+
+            StringBuffer description = new StringBuffer();
+            if (rd.getAuthor() != null) {
+                description.append("作者: " + rd.getAuthor() + "\n");
+            }
+            if (rd.getPrice() > 0) {
+                description.append("価格: " + rd.getPrice() + "円\n");
+            }
+            if (url.getValue().length() > 0) {
+                description.append("Amazonで購入: " + url.getValue());
+            }
+            date.getProperties().add(new Description(description.toString()));
 
             cal.getComponents().add(date);
         }
