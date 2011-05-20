@@ -29,10 +29,10 @@ public class AmazonUtil {
     private static final String REQUEST_METHOD = "GET";
 
     private String endpoint = "ecs.amazonaws.jp";
-    // TODO: Access Key ID
-    private String awsAccessKeyId = "";
-    // TODO: Secret Access Key
-    private String awsSecretKey = "";
+    private String awsAccessKeyId = ConfigureUtil.getInstance().get(
+        ConfigureUtil.AMAZON_AWS_ACCESS_KEY_ID);
+    private String awsSecretKey = ConfigureUtil.getInstance().get(
+        ConfigureUtil.AMAZON_AWS_SECRET_KEY);
 
     private SecretKeySpec secretKeySpec = null;
     private Mac mac = null;
