@@ -1,12 +1,15 @@
 package info.smallfield.comic2ical.model;
 
+import info.smallfield.comic2ical.util.CommonUtil;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import com.google.appengine.api.datastore.Key;
+import java.util.List;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
+
+import com.google.appengine.api.datastore.Key;
 
 @Model(schemaVersion = 1)
 public class ReleaseDate implements Serializable {
@@ -22,9 +25,11 @@ public class ReleaseDate implements Serializable {
     private String title;
     private String series;
     private String publisher;
+    private String author;
     private Date date;
     private Integer price;
-
+    private List<String> titleFlagment;
+    private List<String> authorFlagment;
 
     /**
      * Returns the key.
@@ -96,6 +101,7 @@ public class ReleaseDate implements Serializable {
 
     /**
      * titleを取得します。
+     *
      * @return title
      */
     public String getTitle() {
@@ -104,14 +110,18 @@ public class ReleaseDate implements Serializable {
 
     /**
      * titleを設定します。
-     * @param title title
+     *
+     * @param title
+     *            title
      */
     public void setTitle(String title) {
         this.title = title;
+        this.setTitleFlagment(CommonUtil.getStringFlagment(title));
     }
 
     /**
      * seriesを取得します。
+     *
      * @return series
      */
     public String getSeries() {
@@ -120,7 +130,9 @@ public class ReleaseDate implements Serializable {
 
     /**
      * seriesを設定します。
-     * @param series series
+     *
+     * @param series
+     *            series
      */
     public void setSeries(String series) {
         this.series = series;
@@ -128,6 +140,7 @@ public class ReleaseDate implements Serializable {
 
     /**
      * publisherを取得します。
+     *
      * @return publisher
      */
     public String getPublisher() {
@@ -136,7 +149,9 @@ public class ReleaseDate implements Serializable {
 
     /**
      * publisherを設定します。
-     * @param publisher publisher
+     *
+     * @param publisher
+     *            publisher
      */
     public void setPublisher(String publisher) {
         this.publisher = publisher;
@@ -144,6 +159,7 @@ public class ReleaseDate implements Serializable {
 
     /**
      * dateを取得します。
+     *
      * @return date
      */
     public Date getDate() {
@@ -152,7 +168,9 @@ public class ReleaseDate implements Serializable {
 
     /**
      * dateを設定します。
-     * @param date date
+     *
+     * @param date
+     *            date
      */
     public void setDate(Date date) {
         this.date = date;
@@ -160,6 +178,7 @@ public class ReleaseDate implements Serializable {
 
     /**
      * priceを取得します。
+     *
      * @return price
      */
     public Integer getPrice() {
@@ -168,9 +187,37 @@ public class ReleaseDate implements Serializable {
 
     /**
      * priceを設定します。
-     * @param price price
+     *
+     * @param price
+     *            price
      */
     public void setPrice(Integer price) {
         this.price = price;
     }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+        this.setAuthorFlagment(CommonUtil.getStringFlagment(author));
+    }
+
+    public List<String> getTitleFlagment() {
+        return titleFlagment;
+    }
+
+    public List<String> getAuthorFlagment() {
+        return authorFlagment;
+    }
+
+    public void setTitleFlagment(List<String> titleFlagment) {
+        this.titleFlagment = titleFlagment;
+    }
+
+    public void setAuthorFlagment(List<String> authorFlagment) {
+        this.authorFlagment = authorFlagment;
+    }
+
 }
