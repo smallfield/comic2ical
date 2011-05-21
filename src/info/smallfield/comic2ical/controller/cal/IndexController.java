@@ -6,7 +6,9 @@ import info.smallfield.comic2ical.util.AmazonUtil;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Date;
@@ -41,14 +43,16 @@ public class IndexController extends Controller {
 
         List<String> titles = new ArrayList<String>();
         titles.add("ビリー");
+        titles.add("コナン");
+        titles.add("ボール");
 
-        List<ReleaseDate> list = new ArrayList<ReleaseDate>();
-        list.addAll(rds.findByAuthors(authors));
-        list.addAll(rds.findByTitles(titles));
+        Set<ReleaseDate> set = new HashSet<ReleaseDate>();
+        set.addAll(rds.findByAuthors(authors));
+        set.addAll(rds.findByTitles(titles));
 
         AmazonUtil au = new AmazonUtil();
 
-        for (ReleaseDate rd : list) {
+        for (ReleaseDate rd : set) {
             VEvent date =
                 new VEvent(new Date(rd.getDate()), "『" + rd.getTitle() + "』発売日");
             date
