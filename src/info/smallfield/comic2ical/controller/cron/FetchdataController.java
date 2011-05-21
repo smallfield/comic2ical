@@ -1,6 +1,7 @@
 package info.smallfield.comic2ical.controller.cron;
 
 import info.smallfield.comic2ical.model.ReleaseDate;
+import info.smallfield.comic2ical.service.ReleaseDateService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class FetchdataController extends Controller {
         String line;
         String[] data;
 
+        ReleaseDateService rds = new ReleaseDateService();
+
         while (true) {
             try {
                 URL url =
@@ -55,9 +58,12 @@ public class FetchdataController extends Controller {
                         Charset.forName("sjis")));
 
                 int count = 0;
+                ReleaseDate rd;
                 while ((line = reader.readLine()) != null
                     && (data = line.split("\t", -1)).length == 7) {
-                    ReleaseDate rd = new ReleaseDate();
+                    if ((rd = rds.fetchOneByTitle(data[3])) == null) {
+                        rd = new ReleaseDate();
+                    }
                     try {
                         rd.setDate(sdf.parse(data[2]));
                     } catch (ParseException e) {
@@ -78,9 +84,9 @@ public class FetchdataController extends Controller {
                 logger.info("End fetching : " + url.toString());
                 logger.info(count + " data was added.");
                 if (count == 0) {
+                    // none data added
                     return null;
                 }
-
                 fetchDate.add(Calendar.MONTH, 1);
             } catch (MalformedURLException e) {
 

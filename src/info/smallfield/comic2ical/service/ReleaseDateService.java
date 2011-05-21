@@ -46,4 +46,8 @@ public class ReleaseDateService {
     public void deleteAll() {
         Datastore.delete(Datastore.query(m).asKeyList());
     }
+
+    public ReleaseDate fetchOneByTitle(String title) {
+        return Datastore.query(m).filter(m.title.equal(title)).asSingle();
+    }
 }
