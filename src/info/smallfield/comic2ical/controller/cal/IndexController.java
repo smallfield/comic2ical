@@ -2,7 +2,6 @@ package info.smallfield.comic2ical.controller.cal;
 
 import info.smallfield.comic2ical.model.ReleaseDate;
 import info.smallfield.comic2ical.service.ReleaseDateService;
-import info.smallfield.comic2ical.util.AmazonUtil;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -50,18 +49,13 @@ public class IndexController extends Controller {
         set.addAll(rds.findByAuthors(authors));
         set.addAll(rds.findByTitles(titles));
 
-        AmazonUtil au = new AmazonUtil();
-
         for (ReleaseDate rd : set) {
             VEvent date =
                 new VEvent(new Date(rd.getDate()), "『" + rd.getTitle() + "』発売日");
-            date
-                .getProperties()
-                .add(
-                    new Uid(System.currentTimeMillis()
-                        + "@comic2ical.appspot.com"));
+            date.getProperties().add(
+                new Uid(rd.getKey().hashCode() + "@comic2ical.appspot.com"));
 
-            Url url = new Url(new URI(au.findItem(rd.getTitle())));
+            Url url = new Url(new URI(rd.getAmazonUrl()));
             date.getProperties().add(url);
 
             StringBuffer description = new StringBuffer();
