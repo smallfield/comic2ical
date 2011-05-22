@@ -25,8 +25,8 @@
 	<jsp:param name="title" value="${param.title}" />
 </jsp:include>
 <div id="wrapper" class="span-24">
-<div id="content" class="span-17 colborder">${param.content}</div>
-<div id="side" class="span-6 last"><jsp:include
+<div id="content" class="span-14 colborder">${param.content}</div>
+<div id="side" class="span-9 last"><jsp:include
 	page="/sidemenu.jsp" /></div>
 </div>
 <hr class="space" />
