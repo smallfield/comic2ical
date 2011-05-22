@@ -8,8 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.slim3.datastore.Attribute;
+import org.slim3.datastore.CreationDate;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.Model;
+import org.slim3.datastore.ModificationDate;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -33,6 +35,12 @@ public class ReleaseDate implements Serializable {
     private List<String> titleFlagment;
     private List<String> authorFlagment;
     private String amazonUrl;
+
+    @Attribute(listener = ModificationDate.class)
+    private Date updatedAt;
+
+    @Attribute(listener = CreationDate.class)
+    private Date createdAt;
 
     /**
      * Returns the key.
@@ -238,5 +246,21 @@ public class ReleaseDate implements Serializable {
             }
         }
         return this.amazonUrl;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 }

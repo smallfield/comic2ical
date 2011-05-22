@@ -1,19 +1,22 @@
 package info.smallfield.comic2ical.controller.cal;
 
+import info.smallfield.comic2ical.meta.CalMeta;
+import info.smallfield.comic2ical.model.Cal;
 import info.smallfield.comic2ical.model.ReleaseDate;
 import info.smallfield.comic2ical.service.ReleaseDateService;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+
+import javax.servlet.ServletOutputStream;
 
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.Description;
+import net.fortuna.ical4j.model.property.Name;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Url;
@@ -21,6 +24,9 @@ import net.fortuna.ical4j.model.property.Version;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
+import org.slim3.datastore.Datastore;
+
+import com.google.appengine.api.datastore.Key;
 
 public class IndexController extends Controller {
 
@@ -28,6 +34,22 @@ public class IndexController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
+        Key key = Datastore.createKey(Cal.class, asString("key"));
+        if (key == null) {
+            return null;
+        }
+        Cal calData = Datastore.get(Cal.class, key);
+        if (calData == null) {
+            return null;
+        }
+
+        final CalendarOutputter output = new CalendarOutputter();
+
+        if (calData.getCalendarOutput() != null) {
+            output.output(
+                calData.getCalendarOutput(),
+                response.getOutputStream());
+        }
 
         net.fortuna.ical4j.model.Calendar cal =
             new net.fortuna.ical4j.model.Calendar();
@@ -36,18 +58,9 @@ public class IndexController extends Controller {
         cal.getProperties().add(Version.VERSION_2_0);
         cal.getProperties().add(CalScale.GREGORIAN);
 
-        List<String> authors = new ArrayList<String>();
-        authors.add("吉崎");
-        authors.add("荒木");
-
-        List<String> titles = new ArrayList<String>();
-        titles.add("ビリー");
-        titles.add("コナン");
-        titles.add("ボール");
-
         Set<ReleaseDate> set = new HashSet<ReleaseDate>();
-        set.addAll(rds.findByAuthors(authors));
-        set.addAll(rds.findByTitles(titles));
+        set.addAll(rds.findByAuthors(calData.getKeywords()));
+        set.addAll(rds.findByTitles(calData.getKeywords()));
 
         for (ReleaseDate rd : set) {
             VEvent date =
@@ -73,8 +86,22 @@ public class IndexController extends Controller {
             cal.getComponents().add(date);
         }
         response.setContentType("text/calendar");
-        final CalendarOutputter output = new CalendarOutputter();
-        output.output(cal, response.getOutputStream());
+
+        if (set.size() > 0) {
+            output.output(cal, response.getOutputStream());
+            calData.setCalendarOutput(cal);
+            Datastore.putAsync(calData);
+        } else {
+            ServletOutputStream os = response.getOutputStream();
+            os.println("BEGIN:VCALENDAR");
+            os.println("PRODID:-//Small Field//Comic2iCal 1.0//EN");
+            os.println("VERSION:2.0");
+            os.println("CALSCALE:GREGORIAN");
+            os.println("END:VCALENDAR");
+            os.flush();
+            os.close();
+        }
+
         return null;
     }
 }

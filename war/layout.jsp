@@ -9,13 +9,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="${f:url('/')}js/jquery.spinner.js"></script>
 <title>${param.title}</title>
-<link rel="stylesheet" href="css/screen.css" type="text/css"
+<link rel="stylesheet" href="${f:url('/')}css/screen.css" type="text/css"
 	media="screen, projection" />
-<link rel="stylesheet" href="css/print.css" type="text/css"
+<link rel="stylesheet" href="${f:url('/')}css/print.css" type="text/css"
 	media="print" />
 <!--[if IE]>
-  <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="${f:url('/')}css/ie.css" type="text/css" media="screen, projection" />
 <![endif]-->
 <link rel="stylesheet" href="css/style.css" type="text/css"
 	media="screen, projection" />

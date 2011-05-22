@@ -10,6 +10,7 @@ public class ConfigureUtil {
     public static final String AMAZON_AWS_ACCESS_KEY_ID =
         "amazon.awsAccessKeyId";
     public static final String AMAZON_AWS_SECRET_KEY = "amazon.awsSecretKey";
+    public static final String CRYPT_KEY = "crypt.key";
 
     private Properties configuration;
 

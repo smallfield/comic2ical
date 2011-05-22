@@ -33,15 +33,19 @@ public class CommonUtilTest {
     }
 
     @Test
-    public void testEnclipt() throws InvalidKeyException, IllegalBlockSizeException, NoSuchAlgorithmException, UnsupportedEncodingException, BadPaddingException, NoSuchPaddingException {
-        String src = "これが元の文字列";
-        String key = "the key value!";
+    public void testEnclipt() throws InvalidKeyException,
+            IllegalBlockSizeException, NoSuchAlgorithmException,
+            UnsupportedEncodingException, BadPaddingException,
+            NoSuchPaddingException {
+        String src = "238";
         try {
-            assertEquals(src, CommonUtil.decrypt(key, CommonUtil.encrypt(key, src)));
+            assertEquals(src, CommonUtil.decrypt(CommonUtil.encrypt(src)));
         } catch (DecoderException e) {
             // TODO 自動生成された catch ブロック
             e.printStackTrace();
         }
+
+        System.out.println(CommonUtil.generateShortenString("すごい長い文章か何か"));
     }
 
 }
