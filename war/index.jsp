@@ -10,11 +10,9 @@
 			<h2>使い方</h2>
 			<p>
 <ol>
-	<li class="span-17 colborder"></li>
-	<li class="span-17 colborder"></li>
-	<li class="span-17 colborder"></li>
-	<li class="span-17 colborder"></li>
-	<li class="span-17 colborder"></li>
+	<li>右のキーワード欄に、新刊発売日を知りたいコミックの名前や、作者名を入力します。一部でも構いません。改行やスペース区切りで複数のキーワードを入力できます。</li>
+	<li>作成ボタンをクリックします。</li>
+	<li>WebCal用のURLが表示されるので、これらをクライアントソフトに追加します。iPhone,Macの場合には、webcal://で始まるURLをクリックすれば、自動で予定表に登録されます。</li>
 </ol>
 
 			</p>
