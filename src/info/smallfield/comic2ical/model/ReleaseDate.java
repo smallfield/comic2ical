@@ -1,6 +1,5 @@
 package info.smallfield.comic2ical.model;
 
-import info.smallfield.comic2ical.util.AmazonUtil;
 import info.smallfield.comic2ical.util.CommonUtil;
 
 import java.io.Serializable;
@@ -9,7 +8,6 @@ import java.util.List;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.CreationDate;
-import org.slim3.datastore.Datastore;
 import org.slim3.datastore.Model;
 import org.slim3.datastore.ModificationDate;
 
@@ -236,15 +234,6 @@ public class ReleaseDate implements Serializable {
     }
 
     public String getAmazonUrl() {
-        if (this.amazonUrl == null || !(this.amazonUrl.length() > 0)) {
-            AmazonUtil au;
-            try {
-                au = new AmazonUtil();
-                this.amazonUrl = au.findItem(this.getTitle());
-                Datastore.putAsync(this);
-            } catch (Exception e) {
-            }
-        }
         return this.amazonUrl;
     }
 
