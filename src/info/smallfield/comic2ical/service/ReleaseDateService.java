@@ -50,4 +50,8 @@ public class ReleaseDateService {
     public ReleaseDate fetchOneByTitle(String title) {
         return Datastore.query(m).filter(m.title.equal(title)).asSingle();
     }
+
+    public int count() {
+        return Datastore.query(m).count();
+    }
 }
