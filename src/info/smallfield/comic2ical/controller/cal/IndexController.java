@@ -1,6 +1,5 @@
 package info.smallfield.comic2ical.controller.cal;
 
-import info.smallfield.comic2ical.meta.CalMeta;
 import info.smallfield.comic2ical.model.Cal;
 import info.smallfield.comic2ical.model.ReleaseDate;
 import info.smallfield.comic2ical.service.ReleaseDateService;
@@ -16,7 +15,6 @@ import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.Description;
-import net.fortuna.ical4j.model.property.Name;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Url;

@@ -1,7 +1,7 @@
 <queue-entries>
   <queue>
     <name>default</name>
-    <rate>10/s</rate>
+    <rate>30/m</rate>
   </queue>
   <queue>
     <name>slim3-gtx-queue</name>

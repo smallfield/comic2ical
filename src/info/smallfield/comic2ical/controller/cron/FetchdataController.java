@@ -19,7 +19,11 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Transaction;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions.Builder;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
 
 public class FetchdataController extends Controller {
 
@@ -78,6 +82,13 @@ public class FetchdataController extends Controller {
                     Transaction tx = Datastore.beginTransaction();
                     Datastore.put(rd);
                     tx.commit();
+
+                    QueueFactory.getQueue("default").add(
+                        Builder
+                            .withUrl("/cron/getamazonurl")
+                            .param("key", KeyFactory.keyToString(rd.getKey()))
+                            .method(Method.GET));
+
                     count++;
                 }
                 reader.close();
