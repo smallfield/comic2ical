@@ -18,7 +18,7 @@ public class GetamazonurlController extends Controller {
             return null;
         }
         ReleaseDate calData = Datastore.get(ReleaseDate.class, key);
-        if (calData == null) {
+        if (calData == null || calData.getAmazonUrl() != null) {
             return null;
         }
 

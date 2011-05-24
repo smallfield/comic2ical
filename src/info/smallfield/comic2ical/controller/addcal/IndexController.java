@@ -12,13 +12,16 @@ import org.slim3.datastore.Datastore;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Transaction;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions.Builder;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
 
 public class IndexController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
         String keywords = asString("keywords");
-        if(keywords.length() == 0){
+        if (keywords.length() == 0) {
             return null;
         }
         String[] keyword_array = keywords.split("[\\r\\n\\t 　]+");
@@ -35,10 +38,26 @@ public class IndexController extends Controller {
         Transaction tx = Datastore.beginTransaction();
         Datastore.put(cal);
         tx.commit();
-        String url = request.getRequestURL().toString().replaceAll("(^[^/]+//[^/]+/).*", "$1") + "cal/"+url_param;
+        String url =
+            request
+                .getRequestURL()
+                .toString()
+                .replaceAll("(^[^/]+//[^/]+/).*", "$1")
+                + "cal/"
+                + url_param;
         requestScope("keywords", keyword_list);
-        requestScope("url",url);
-        requestScope("webcalurl", url.replaceAll("^[^/]+://(.*)$", "webcal://$1"));
+        requestScope("url", url);
+        requestScope(
+            "webcalurl",
+            url.replaceAll("^[^/]+://(.*)$", "webcal://$1"));
+
+        QueueFactory.getQueue("construct-calendar").add(
+            Builder
+                .withUrl("/cal/")
+                .param("key", url_param)
+                .param("get", "true")
+                .method(Method.GET));
+
         return forward("index.jsp");
     }
 }

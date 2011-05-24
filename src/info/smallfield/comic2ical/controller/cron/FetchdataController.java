@@ -83,7 +83,7 @@ public class FetchdataController extends Controller {
                     Datastore.put(rd);
                     tx.commit();
 
-                    QueueFactory.getQueue("default").add(
+                    QueueFactory.getQueue("amazon").add(
                         Builder
                             .withUrl("/cron/getamazonurl")
                             .param("key", KeyFactory.keyToString(rd.getKey()))
