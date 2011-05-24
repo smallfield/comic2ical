@@ -5,11 +5,13 @@
 
 <p class="success"> <img src="images/icons/tick.png" alt="成功">以下のキーワードで新刊の検索を行う、カレンダーを作成しました。</p>
 
-<ul>
-<c:forEach var="e" items="${keywords}">
-	<li>${f:h(e)}</li>
-</c:forEach>
-</ul>
+
+<div class="clearfix"><ul class="keywords">
+		<c:forEach var="e" items="${keywords}">
+			<li>${f:h(e)}</li>
+		</c:forEach>
+	</ul>
+</div>
 
 <p>以下のURLから参照可能です。</p>
 

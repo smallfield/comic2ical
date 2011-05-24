@@ -25,7 +25,7 @@
 		margin: 1.5em;
 	}
 	#header h1 {
-		font-size: 500%
+		font-size: 500%;
 	}
 	#wrapper {
 		font-size: 300%;
@@ -42,6 +42,9 @@
 	button[type] {
 		line-height: normal;
 	}
+	textarea {
+		font-seze: 300%;
+	}
 }
 
 /**************************************/
@@ -55,6 +58,23 @@
 /**************************************/
 /*            MAIN CONTENT            */
 /**************************************/
+ul.keywords {
+	list-style-type: none;
+	margin: 0px;
+}
+
+ul.keywords li {
+	float: left;
+	padding: 0 1em;
+	margin-bottom: 10px;
+	border: 1px solid;
+	background: #BBCEF1;
+	color: #000000;
+	border-color: #85a6e5;
+	-webkit-border-radius: 1em;
+	-moz-border-radius: 1em;
+	border-radius: 1em;
+}
 
 /**************************************/
 /*               FOOTER               */

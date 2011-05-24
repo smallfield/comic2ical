@@ -274,7 +274,7 @@ a[href^="http://yourwebsite.com"] { background:none; padding:0; margin:0; }
 .top {margin-top:0;padding-top:0;}
 .bottom {margin-bottom:0;padding-bottom:0;}
 .thin {font-weight: lighter;}
-.error, .notice, .success {padding:.8em;margin-bottom:1.6em;border:2px solid #ddd;}
+.error, .notice, .success {padding:.8em;margin-bottom:1.6em;border:2px solid #ddd;-webkit-border-radius: 1em;-moz-border-radius: 1em;border-radius: 1em;}
 .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
 .notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
 .success {background:#E6EFC2;color:#264409;border-color:#C6D880;}
