@@ -19,6 +19,7 @@ import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Url;
 import net.fortuna.ical4j.model.property.Version;
+import net.fortuna.ical4j.model.property.XProperty;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
@@ -41,9 +42,11 @@ public class IndexController extends Controller {
             return null;
         }
 
+        response.setContentType("text/calendar; charset=utf-8;");
+
         final CalendarOutputter output = new CalendarOutputter();
 
-        if (calData.getCalendarOutput() != null) {
+        if (calData.getCalendarOutput() != null && request.getParameter("get") == null) {
             output.output(
                 calData.getCalendarOutput(),
                 response.getOutputStream());
@@ -55,6 +58,7 @@ public class IndexController extends Controller {
             new ProdId("-//Small Field//Comic2iCal 1.0//EN"));
         cal.getProperties().add(Version.VERSION_2_0);
         cal.getProperties().add(CalScale.GREGORIAN);
+        cal.getProperties().add(new XProperty("X-WR-CALNAME", "こみかるカレンダー"));
 
         Set<ReleaseDate> set = new HashSet<ReleaseDate>();
         set.addAll(rds.findByAuthors(calData.getKeywords()));
@@ -66,24 +70,27 @@ public class IndexController extends Controller {
             date.getProperties().add(
                 new Uid(rd.getKey().hashCode() + "@comic2ical.appspot.com"));
 
-            Url url = new Url(new URI(rd.getAmazonUrl()));
-            date.getProperties().add(url);
+            Url url = null;
+            try {
+                url = new Url(new URI(rd.getAmazonUrl()));
+                date.getProperties().add(url);
+            } catch (Exception e) {
+            }
 
             StringBuffer description = new StringBuffer();
             if (rd.getAuthor() != null) {
                 description.append("作者: " + rd.getAuthor() + "\n");
             }
-            if (rd.getPrice() > 0) {
-                description.append("価格: " + rd.getPrice() + "円\n");
+            if (rd.getPublisher() != null) {
+                description.append("出版社: " + rd.getPublisher() + "\n");
             }
-            if (url.getValue().length() > 0) {
+            if (url != null && url.getValue().length() > 0) {
                 description.append("Amazonで購入: " + url.getValue());
             }
             date.getProperties().add(new Description(description.toString()));
 
             cal.getComponents().add(date);
         }
-        response.setContentType("text/calendar");
 
         if (set.size() > 0) {
             output.output(cal, response.getOutputStream());
