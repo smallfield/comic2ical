@@ -136,9 +136,10 @@ public class CommonUtil {
 
     public static String base36Encode(byte[] l) {
         StringBuffer ret = new StringBuffer();
+        int i;
         for (byte b : l) {
-            b = (byte) Math.abs(b);
-            ret.append(chars[b % chars.length]);
+            i = Math.abs((int) b);
+            ret.append(chars[i % chars.length]);
         }
         return ret.toString();
     }

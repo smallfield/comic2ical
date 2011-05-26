@@ -46,7 +46,8 @@ public class IndexController extends Controller {
 
         final CalendarOutputter output = new CalendarOutputter();
 
-        if (calData.getCalendarOutput() != null && request.getParameter("get") == null) {
+        if (calData.getCalendarOutput() != null
+            && request.getParameter("get") == null) {
             output.output(
                 calData.getCalendarOutput(),
                 response.getOutputStream());
@@ -81,8 +82,16 @@ public class IndexController extends Controller {
             if (rd.getAuthor() != null) {
                 description.append("作者: " + rd.getAuthor() + "\n");
             }
-            if (rd.getPublisher() != null) {
-                description.append("出版社: " + rd.getPublisher() + "\n");
+            if (rd.getSeriesRef().getModel() != null
+                && rd.getSeriesRef().getModel().getPublisherRef().getModel() != null) {
+                description.append("出版社: "
+                    + rd
+                        .getSeriesRef()
+                        .getModel()
+                        .getPublisherRef()
+                        .getModel()
+                        .getName()
+                    + "\n");
             }
             if (url != null && url.getValue().length() > 0) {
                 description.append("Amazonで購入: " + url.getValue());

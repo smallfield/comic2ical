@@ -9,6 +9,7 @@ import java.util.List;
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.CreationDate;
 import org.slim3.datastore.Model;
+import org.slim3.datastore.ModelRef;
 import org.slim3.datastore.ModificationDate;
 
 import com.google.appengine.api.datastore.Key;
@@ -25,8 +26,7 @@ public class ReleaseDate implements Serializable {
     private Long version;
 
     private String title;
-    private String series;
-    private String publisher;
+    private ModelRef<Series> seriesRef = new ModelRef<Series>(Series.class);
     private String author;
     private Date date;
     private Integer price;
@@ -129,44 +129,6 @@ public class ReleaseDate implements Serializable {
     }
 
     /**
-     * seriesを取得します。
-     *
-     * @return series
-     */
-    public String getSeries() {
-        return series;
-    }
-
-    /**
-     * seriesを設定します。
-     *
-     * @param series
-     *            series
-     */
-    public void setSeries(String series) {
-        this.series = series;
-    }
-
-    /**
-     * publisherを取得します。
-     *
-     * @return publisher
-     */
-    public String getPublisher() {
-        return publisher;
-    }
-
-    /**
-     * publisherを設定します。
-     *
-     * @param publisher
-     *            publisher
-     */
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    /**
      * dateを取得します。
      *
      * @return date
@@ -251,5 +213,9 @@ public class ReleaseDate implements Serializable {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public ModelRef<Series> getSeriesRef() {
+        return seriesRef;
     }
 }

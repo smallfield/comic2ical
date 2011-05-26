@@ -2,6 +2,7 @@ package info.smallfield.comic2ical.controller.cron;
 
 import info.smallfield.comic2ical.model.ReleaseDate;
 import info.smallfield.comic2ical.service.ReleaseDateService;
+import info.smallfield.comic2ical.service.SeriesService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class FetchdataController extends Controller {
         String[] data;
 
         ReleaseDateService rds = new ReleaseDateService();
+        SeriesService ss = new SeriesService();
 
         while (true) {
             try {
@@ -73,8 +75,9 @@ public class FetchdataController extends Controller {
                     } catch (ParseException e) {
                         continue;
                     }
-                    rd.setPublisher(data[0]);
-                    rd.setSeries(data[1]);
+
+                    rd.getSeriesRef().setModel(ss.addSeries(data[1], data[0]));
+
                     rd.setTitle(data[3]);
                     rd.setAuthor(data[4]);
                     rd.setPrice(Integer.valueOf(data[5]));
