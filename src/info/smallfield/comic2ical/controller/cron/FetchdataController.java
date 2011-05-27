@@ -76,6 +76,10 @@ public class FetchdataController extends Controller {
                         continue;
                     }
 
+                    if (data[1].length() == 0) {
+                        data[1] = SeriesService.OTHER;
+                    }
+
                     rd.getSeriesRef().setModel(ss.addSeries(data[1], data[0]));
 
                     rd.setTitle(data[3]);

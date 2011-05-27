@@ -24,7 +24,7 @@ public class Publisher implements Serializable {
     private String name;
 
     @Attribute(persistent = false)
-    private InverseModelListRef<Series, Publisher> releaseDateListRef =
+    private InverseModelListRef<Series, Publisher> seriesListRef =
         new InverseModelListRef<Series, Publisher>(
             Series.class,
             SeriesMeta.get().publisherRef,
@@ -106,7 +106,7 @@ public class Publisher implements Serializable {
         return name;
     }
 
-    public InverseModelListRef<Series, Publisher> getReleaseDateListRef() {
-        return releaseDateListRef;
+    public InverseModelListRef<Series, Publisher> getSeriesListRef() {
+        return seriesListRef;
     }
 }
