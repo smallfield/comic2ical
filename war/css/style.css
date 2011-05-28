@@ -41,6 +41,7 @@
 	}
 	button[type] {
 		line-height: normal;
+		font-size: 300%;
 	}
 }
 
