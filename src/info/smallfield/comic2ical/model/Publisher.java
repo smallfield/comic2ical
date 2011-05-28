@@ -1,8 +1,10 @@
 package info.smallfield.comic2ical.model;
 
 import info.smallfield.comic2ical.meta.SeriesMeta;
+import info.smallfield.comic2ical.util.CommonUtil;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.InverseModelListRef;
@@ -22,6 +24,7 @@ public class Publisher implements Serializable {
     private Long version;
 
     private String name;
+    private List<String> nameFlagment;
 
     @Attribute(persistent = false)
     private InverseModelListRef<Series, Publisher> seriesListRef =
@@ -100,6 +103,7 @@ public class Publisher implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+        this.setNameFlagment(CommonUtil.getStringFlagment(name));
     }
 
     public String getName() {
@@ -108,5 +112,13 @@ public class Publisher implements Serializable {
 
     public InverseModelListRef<Series, Publisher> getSeriesListRef() {
         return seriesListRef;
+    }
+
+    public void setNameFlagment(List<String> nameFlagment) {
+        this.nameFlagment = nameFlagment;
+    }
+
+    public List<String> getNameFlagment() {
+        return nameFlagment;
     }
 }
