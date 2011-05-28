@@ -4,7 +4,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
 <jsp:include page="/layout.jsp">
-	<jsp:param name="title" value="Index" />
+	<jsp:param name="title" value="こみかる - コミックの最新新刊情報をカレンダーで表示" />
 	<jsp:param name="content">
 		<jsp:attribute name="value">
            <h2>これは何？</h2>

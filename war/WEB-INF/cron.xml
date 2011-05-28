@@ -3,8 +3,9 @@
 	<cron>
 		<url>/cron/fetchdata</url>
 		<description>Fetch data from mangaoh.co.jp</description>
-		<schedule>every 24 hours</schedule>
+		<schedule>every thu of month 23:06</schedule>
 		<timezone>Asia/Tokyo</timezone>
+		<!--<schedule>every 24 hours</schedule> -->
 		<!--<schedule>every 2 minutes</schedule> -->
 	</cron>
 </cronentries>

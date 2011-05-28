@@ -54,4 +54,9 @@ public class ReleaseDateService {
     public int count() {
         return Datastore.query(m).count();
     }
+
+    public List<ReleaseDate> getNullSeriesList() {
+        SeriesService ss = new SeriesService();
+        return ss.findByName("").getReleaseDateListRef().getModelList();
+    }
 }
