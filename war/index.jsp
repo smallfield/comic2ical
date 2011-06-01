@@ -10,11 +10,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=300px,user-scalable=no" />
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 <script type="text/javascript" src="${f:url('/')}js/jquery.spinner.js"></script>
-<title>${param.title}</title>
-<link rel="stylesheet" href="${f:url('/')}css/screen.css" type="text/css"
-	media="screen, projection" />
+<title>こみかる(β)</title>
+<link rel="stylesheet" href="${f:url('/')}css/screen.css"
+	type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="${f:url('/')}css/print.css" type="text/css"
 	media="print" />
 <!--[if IE]>
@@ -41,38 +42,38 @@
 </div>
 <div id="wrapper" class="span-24">
 <div id="content" class="span-14 colborder">
-           <h2>これは何？</h2>
-        <p>
-          お気に入りのコミックを、タイトルや作者名で検索して、新刊発売日をiPhoneの予定表や、Googleカレンダーに表示させる事のできるWebCalのURLを取得することが出来ます。利用料は無料です。新刊発売日の情報は逐次更新されますので、一度WebCalのURLを登録すれば、ずっと最新の発売日情報を取得することが出来ます。
-        </p>
-        <p>また、Amazonで購入可能なコミックに関しては、商品へのリンクが表示されるので、直接購入することもできます。</p>
-			<h2>使い方</h2>
-			<p>
+<h2>これは何？</h2>
+<p>
+お気に入りのコミックを、タイトルや作者名で検索して、新刊発売日をiPhoneの予定表や、Googleカレンダーに表示させる事のできるWebCalのURLを取得することが出来ます。利用料は無料です。新刊発売日の情報は逐次更新されますので、一度WebCalのURLを登録すれば、ずっと最新の発売日情報を取得することが出来ます。
+</p>
+<p>また、Amazonで購入可能なコミックに関しては、商品へのリンクが表示されるので、直接購入することもできます。</p>
+<h2>使い方</h2>
+<p>
 <ol>
 	<li>キーワード欄に、新刊発売日を知りたいコミックの名前や、作者名を入力します。一部でも構いません。改行やスペース区切りで複数のキーワードを入力できます。</li>
 	<li>作成ボタンをクリックします。</li>
 	<li>WebCal用のURLが表示されるので、これらをクライアントソフトに追加します。iPhone,Macの場合には、webcal://で始まるURLをクリックすれば、自動で予定表に登録されます。</li>
 </ol>
-			</p>
+</p>
 <p>現在${f:h(count)}件のデータがあります。</p>
 
-こみかる - コミックの最新新刊情報をカレンダーで表示
-</div>
+こみかる - コミックの最新新刊情報をカレンダーで表示</div>
 <div id="side" class="span-9 last">
 
 
 <h2>カレンダーURLの取得</h2>
 
 <form action="#" id="wordform">
-<div><label for="keywords">キーワード:</label><br><textarea id="keywords" name="keywords" cols="45" rows="5">
-</textarea></div>
+<div><label for="keywords">キーワード:</label><br><textarea
+	id="keywords" name="keywords" cols="45" rows="5">
+</textarea>
+</div>
 
 
-<button type="submit" class="button positive">
-	  		<img src="images/icons/tick.png" alt="作成"> 作成
-</button>
+<button type="submit" class="button positive"><img
+	src="images/icons/tick.png" alt="作成"> 作成 </button>
 </form>
-<hr class="space"/>
+<hr class="space" />
 <div id="result" class="span-9"></div>
 
 <script type="text/javascript">
@@ -89,14 +90,14 @@ $('#wordform').submit(function(event) {
      }
      );
 });
-</script>
-	<jsp:include
-	page="/sidemenu.jsp" /></div>
+</script></div>
 </div>
 <hr class="space" />
 <div id="footer" class="span-24">
 <hr />
-<address>Created by <a href="http://www.twitter.com/small_field">@small_field</a>. All Right Reserved.</address>
+<address>Created by <a
+	href="http://www.twitter.com/small_field">@small_field</a>. All Right
+Reserved.</address>
 </div>
 </div>
 </body>
